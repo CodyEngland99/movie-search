@@ -33,9 +33,46 @@
       </div>
     </header>
 
+    <section class="now-playing">
+      <h2>Your TV Adventure Starts Here</h2>
+      <div class="swiper">
+        <div class="swiper-wrapper">
+          <!-- <div class="swiper-slide">
+            <a href="movie-details.html?id=1">
+              <img src="./images/no-image.jpg" alt="Movie Title" />
+            </a>
+            <h4 class="swiper-rating">
+              <i class="fas fa-star text-secondary"></i> 8 / 10
+            </h4>
+          </div> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Search Movies -->
+    <section class="search">
+      <div class="container">
+        <div id="alert"></div>
+        <form action="/search-tv.html" class="search-form">
+    
+          <div class="search-flex">
+            <input
+              type="text"
+              name="search-term"
+              id="search-term"
+              placeholder="Search for your TV show"
+            />
+            <button class="btn" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+
     <!-- Popular TV Shows -->
     <section class="container">
-      <h2>Popular TV Shows</h2>
       <div id="popular" class="grid card-list">
        
       </div>

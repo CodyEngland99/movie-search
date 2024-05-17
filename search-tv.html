@@ -10,13 +10,11 @@
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="lib/swiper.css" />
     <link rel="stylesheet" href="lib/fontawesome.css" />
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/spinner.css" />
-    <script src="lib/swiper.js"></script>
     <script src="js/script.js" defer></script>
-    <title>Flixx</title>
+    <title>Flixx | Search Movies & Shows</title>
   </head>
   <body>
     <header class="main-header">
@@ -35,35 +33,18 @@
       </div>
     </header>
 
-    <!-- Now Playing Section -->
-    <section class="now-playing">
-      <h2>Discover Your Next Cinematic Adventure</h2>
-      <div class="swiper">
-        <div class="swiper-wrapper">
-          <!-- <div class="swiper-slide">
-            <a href="movie-details.html?id=1">
-              <img src="./images/no-image.jpg" alt="Movie Title" />
-            </a>
-            <h4 class="swiper-rating">
-              <i class="fas fa-star text-secondary"></i> 8 / 10
-            </h4>
-          </div> -->
-        </div>
-      </div>
-    </section>
-
     <!-- Search Movies -->
     <section class="search">
       <div class="container">
         <div id="alert"></div>
-        <form action="/search-movie.html" class="search-form">
+        <form action="/search-tv.html" class="search-form">
     
           <div class="search-flex">
             <input
               type="text"
               name="search-term"
               id="search-term"
-              placeholder="Search for your movie"
+              placeholder="Search for your TV show"
             />
             <button class="btn" type="submit">
               <i class="fas fa-search"></i>
@@ -73,18 +54,18 @@
       </div>
     </section>
 
-    <!-- Popular Movies -->
-    <section class="container">
-      <h2>Popular Movies</h2>
-      <div id="popular" class="grid card-list">
-       
+    <!-- Search Results -->
+    <section id="search-results-wrapper" class="container">
+      <heading id="search-results-heading"></heading>
+      <div id="popular" class="grid">
+        
       </div>
-    </section>
+      
+      <div id="pag-container">
+        <button href="#" id="loadMore" class="next-page">Load More</button>
+      </div>
 
-    <div id="pag-container">
-      <button href="#" id="loadMore" class="next-page">Load More</button>
-    </div>
-    
+    </section>
 
     <!-- Footer -->
     <footer class="main-footer">

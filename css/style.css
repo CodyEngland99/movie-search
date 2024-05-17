@@ -387,3 +387,28 @@ section h2 {
 	background-color: transparent !important;
 	pointer-events: none;
 }
+
+/* ===== Scrollbar CSS ===== */
+  /* Firefox */
+/* Width and height of the scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Change the width if needed */
+  height: 12px; /* Change the height if needed */
+}
+
+/* The scrollbar track */
+::-webkit-scrollbar-track {
+  background: #020d18; /* Color of the track */
+  border-radius: 10px; /* Adjust this value as needed */
+}
+
+/* The draggable scrollbar handle */
+::-webkit-scrollbar-thumb {
+  background: #0a4b8f; /* Color of the thumb */
+  border-radius: 10px; /* Adjust this value as needed */
+}
+
+/* The handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color on hover */
+}
