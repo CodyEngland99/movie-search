@@ -412,3 +412,7 @@ section h2 {
 ::-webkit-scrollbar-thumb:hover {
   background: #555; /* Color on hover */
 }
+
+.home-title {
+	padding: 2rem;
+}
