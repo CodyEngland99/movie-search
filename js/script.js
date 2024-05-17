@@ -1,8 +1,7 @@
 const path = window.location.pathname;
 const cardContainer = document.getElementById("popular");
-const getApi = async (endpoint, page) => {
+const getApi = async (endpoint) => {
 	const URL = "https://api.themoviedb.org/3/";
-	const path = endpoint;
 
 	const options = {
 		method: "GET",
@@ -20,6 +19,7 @@ const getApi = async (endpoint, page) => {
 			throw Error("Not good status");
 		} else {
 			const result = await response.json();
+			apiPath = endpoint;
 			return result;
 		}
 	} catch {
@@ -27,10 +27,10 @@ const getApi = async (endpoint, page) => {
 	}
 };
 
-async function displayCards(endpoint) {
-	const { results } = await getApi(endpoint);
+async function displayCards(endpoint, page) {
+	page = pageNum;
 
-	console.log(results);
+	const { results } = await getApi(`${endpoint}&page=${page}`);
 
 	results.forEach((card) => {
 		const div = document.createElement("div");
@@ -169,8 +169,6 @@ async function displayMovieDetails() {
 
 	const container = document.querySelector("#movie-details");
 	container.appendChild(div);
-
-	console.log(results);
 }
 
 async function displayShowDetails() {
@@ -220,29 +218,37 @@ function formatDate(date) {
 	}
 }
 
-async function prevPage() {
-	let pageNum = 1;
-	const page = `&page=${pageNum++}`;
+let apiPath;
+let pageNum = 1;
 
-	if (pageNum === 1) {
-		return;
+async function nextPage() {
+	if (pageNum >= 1) {
+		pageNum++;
+		const path = apiPath.split("=");
+		displayCards(`${path[0]}${pageNum}`);
 	} else {
-		displayCards(page);
+		return;
 	}
 }
 
 function init() {
+	if (path === "/index.html" || path === "/" || path === "/shows.html") {
+		document.querySelector(".next-page").addEventListener("click", () => {
+			nextPage();
+		});
+	} 
+
 	switch (path) {
 		case "/": {
-			displayCards("movie/popular?language=en-US&page=");
+			displayCards("movie/popular?language=en-US");
 			break;
 		}
 		case "/index.html": {
-			displayCards("movie/popular?language=en-US&page=");
+			displayCards("movie/popular?language=en-US");
 			break;
 		}
 		case "/shows.html": {
-			displayCards("tv/popular?language=en-US&&page=");
+			displayCards("tv/popular?language=en-US");
 			break;
 		}
 		case "/search.html": {
@@ -260,6 +266,3 @@ function init() {
 }
 
 document.addEventListener("DOMContentLoaded", init);
-const prev = document
-	.getElementById("prev")
-	.addEventListener("click", prevPage);
