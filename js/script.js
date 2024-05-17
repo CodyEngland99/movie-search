@@ -3,7 +3,6 @@ const path = window.location.pathname;
 let apiPath;
 let pageNum = 1;
 
-
 const cardContainer = document.getElementById("popular");
 const getApi = async (endpoint) => {
 	const URL = "https://api.themoviedb.org/3/";
@@ -32,15 +31,15 @@ const getApi = async (endpoint) => {
 };
 
 const getSearchApi = async (endpoint) => {
-
 	const options = {
-		method: 'GET',
+		method: "GET",
 		headers: {
-			accept: 'application/json',
-			Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkYmRhMTkxZjVjODE0ZWVkNzQyODY5MTVkNDRhYzFlOSIsInN1YiI6IjY2NDQxZTcyOGNkOGRlNGRiYTFjNjlmYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.InKaaOzDj3-W5xpnsT71Hv88wDGAPpEDMEClcFtER1w'
-		}
+			accept: "application/json",
+			Authorization:
+				"Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkYmRhMTkxZjVjODE0ZWVkNzQyODY5MTVkNDRhYzFlOSIsInN1YiI6IjY2NDQxZTcyOGNkOGRlNGRiYTFjNjlmYiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.InKaaOzDj3-W5xpnsT71Hv88wDGAPpEDMEClcFtER1w",
+		},
 	};
-	
+
 	try {
 		const response = await fetch(endpoint, options);
 
@@ -54,20 +53,21 @@ const getSearchApi = async (endpoint) => {
 	} catch {
 		console.log("Error");
 	}
-}
+};
 
 async function apiCards(endpoint, page) {
 	page = pageNum;
 
-	const { results } = await getApi(`${endpoint}&page=${page}`);
+	const { results } = await getApi(
+		`${endpoint}&include_adult=false&language=en-US&page=${page}`
+	);
 
-	displayCards(results)
+	displayCards(results);
 }
 
 function displayCards(results) {
 	results.forEach((card) => {
 		const div = document.createElement("div");
-
 
 		div.classList.add("card");
 
@@ -96,7 +96,9 @@ function displayCards(results) {
       <h5 class="card-title">${checkingTitle(card)}</h5>
       <p class="card-text">
         <small class="text-muted">Release: ${
-					(path === "/shows.html" || path === "/search-tv.html") ? formatDate(card, 1) : formatDate(card, 3)
+					path === "/shows.html" || path === "/search-tv.html"
+						? formatDate(card, 1)
+						: formatDate(card, 3)
 				}
         </small>
       </p>
@@ -327,13 +329,12 @@ function checkingTitle(card) {
 
 // ! RETURNING THE CORRECT DATE INFORMATION SINCE API HAS DIFFRENT NAMES FOR TITLE
 function formatDate(date, id) {
-
 	if (id === 1) {
 		const parts = date.first_air_date.split("-");
 
 		let formatDates = `${parts[1]}/${parts[2]}/${parts[0]}`;
 
-		return formatDates
+		return formatDates;
 	}
 
 	if (id == 2) {
@@ -352,32 +353,28 @@ function formatDate(date, id) {
 	}
 }
 
-
-async function searchMovieInput() {
-
+async function searchInput(type) {
 	let userInput = window.location.search;
 
-	let input = userInput.split("=")
+	let input = userInput.split("=");
 
-	const results = await apiCards(`search/movie?query=${input[1]}`)
+	if (type === "tv") {
+		await apiCards(
+			`search/tv?query=${input[1]}&include_adult=false&language=en-US`
+		);
+	}
 
-}
-
-async function searchTvInput() {
-
-	let userInput = window.location.search;
-
-	let input = userInput.split("=")
-
-	await apiCards(`search/tv?query=${input[1]}`)
-
+	if (type === "movie") {
+		await apiCards(
+			`search/movie?query=${input[1]}&include_adult=false&language=en-US`
+		);
+	}
 }
 
 const backPage = () => {
 	window.history.back();
-}
+};
 async function nextPage() {
-
 	if (pageNum >= 1) {
 		pageNum++;
 		const endpoint = apiPath.split("=");
@@ -392,7 +389,13 @@ async function nextPage() {
 	}
 }
 function init() {
-	if (path === "/index.html" || path === "/" || path === "/shows.html" || path === "/search-movie.html" || path === "/search-tv.html") {
+	if (
+		path === "/index.html" ||
+		path === "/" ||
+		path === "/shows.html" ||
+		path === "/search-movie.html" ||
+		path === "/search-tv.html"
+	) {
 		document.querySelector(".next-page").addEventListener("click", () => {
 			nextPage();
 		});
@@ -400,10 +403,9 @@ function init() {
 
 	if (path === "/movie-details.html" || path === "/tv-details.html") {
 		document.querySelector("#back-btn").addEventListener("click", () => {
-			backPage()
+			backPage();
 		});
 	}
-
 
 	switch (path) {
 		case "/": {
@@ -419,11 +421,11 @@ function init() {
 			break;
 		}
 		case "/search-movie.html": {
-			searchMovieInput()
+			searchInput("movie");
 			break;
 		}
 		case "/search-tv.html": {
-			searchTvInput()
+			searchInput("tv");
 			break;
 		}
 		case "/movie-details.html": {
